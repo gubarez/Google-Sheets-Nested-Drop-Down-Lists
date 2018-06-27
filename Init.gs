@@ -19,13 +19,13 @@ function init () {
   }
   
   var values = settingsSheet.getDataRange().getValues()
-   
+  Logger.log('init')
   var settings = []
   if(values.length > 1) {
     for (var i = 1; i < values.length; i++) {
       
       //no source or target, so skip
-      if(!activeSpreadsheet.getSheetByName(values[i][0]) || activeSpreadsheet.getSheetByName(values[i][1])) continue;
+      //if(!activeSpreadsheet.getSheetByName(values[i][0]) || !activeSpreadsheet.getSheetByName(values[i][1])) continue;
       
       settings.push({
         source: values[i][0],
@@ -35,6 +35,8 @@ function init () {
       })
     }
   }
+  Logger.log(settings)
+  Logger.log('after')
    
   for (var i in settings) {
     var setting = settings[i]
@@ -67,16 +69,20 @@ function init () {
     .forSpreadsheet(SpreadsheetApp.getActive())
     .onEdit()
     .create()
+  Logger.log(settings)
 }
 
 
 function edit(e) {
-  Logger.log(e)
+  
   var range = e.range
   var row = range.getRow()
   var col = range.getColumn()
   var sheetName = e.source.getActiveSheet().getName()
   var settings = getJsonProperty('settings') || []
+  
+  Logger.log(e)
+  Logger.log(settings)
   
   var oldValue = e.oldValue
   var value = e.value
