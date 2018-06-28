@@ -97,7 +97,7 @@ function edit(e) {
         var rule = SpreadsheetApp.newDataValidation().requireValueInList(setting.ranges[e.value]).build()
         targetCell.setDataValidation(rule)
       } else {
-        targetCell.removeDataValidation()
+        targetCell.setDataValidation(null)
       }
       Logger.log('FIN')
       break;
