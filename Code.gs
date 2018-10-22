@@ -23,6 +23,10 @@
 //}
 
 
-function onOpen () {
-  init()
+//function onOpen () {
+//  init()
+//}
+
+function test() {
+  Logger.log('TEST 3@!#!@#!');
 }

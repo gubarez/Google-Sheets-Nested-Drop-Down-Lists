@@ -11,6 +11,7 @@
 var C_SOURCE_TRIGGER = 'SPREADSHEETS';
 
 function init () {
+  Logger.log('init start')
   var activeSpreadsheet = SpreadsheetApp.getActive();
   var settingsSheet = activeSpreadsheet.getSheetByName('_DropDowns_Config_')
   if(!settingsSheet) {
@@ -74,7 +75,7 @@ function init () {
 
 
 function edit(e) {
-  
+  Logger.log('Edit')
   var range = e.range
   var row = range.getRow()
   var col = range.getColumn()
@@ -116,6 +117,7 @@ function checkTriggerExists(nameFunction, triggerSourceType)
    trigger = triggers[i];
    if (trigger.getHandlerFunction() == nameFunction && trigger.getTriggerSource() == triggerSourceType) return true;
   }
+  Logger.log(trigger)
   
   return false; 
 
