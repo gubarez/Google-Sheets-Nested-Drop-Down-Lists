@@ -122,3 +122,12 @@ function checkTriggerExists(nameFunction, triggerSourceType)
   return false; 
 
 }
+
+
+function onInit() {
+  init()
+}
+
+function onEdit(e) {
+  edit(e)
+}
