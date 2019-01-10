@@ -51,11 +51,13 @@ function init () {
         Logger.log(name)
         setting.ranges[name] = []
         for ( var j = 1; j < sourceValues.length; j++) {
-          setting.ranges[name].push(sourceValues[j][idx])
+          if(sourceValues[j][idx]) {
+            setting.ranges[name].push(sourceValues[j][idx])
+          }
         }
       })
     }
-    
+        
     var targetSheet = activeSpreadsheet.getSheetByName(setting.target)
     if(targetSheet && setting.ranges) {
       var range = targetSheet.getRange(setting.row, setting.column, targetSheet.getMaxRows())
