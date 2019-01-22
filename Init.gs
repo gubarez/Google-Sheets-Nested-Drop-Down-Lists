@@ -65,6 +65,7 @@ function init () {
       range.setDataValidation(rule)
     }
   }
+  Logger.log(settings.length)
   setJsonProperty('settings', settings)
   
   if(checkTriggerExists('edit', C_SOURCE_TRIGGER)) return
