@@ -78,35 +78,38 @@ function init () {
 
 
 function edit(e) {
-  Logger.log('Edit')
+  Logger.log('Edit on')
   var range = e.range
-  var row = range.getRow()
-  var col = range.getColumn()
+  var startColId = range.getColumn()
+  var startRowId = range.getRow()
   var sheetName = e.source.getActiveSheet().getName()
   var settings = getJsonProperty('settings') || []
   
-  Logger.log(e)
-  Logger.log(settings)
-  
-  var oldValue = e.oldValue
-  var value = e.value
-  
-  for(var i in settings) {
-    var setting = settings[i]
-    if(setting.target == sheetName && col == setting.column && row >= setting.row) {
-      var targetCell = e.source.getActiveSheet().getRange(row, col+1)
-      Logger.log(e.value)
-      Logger.log(setting.ranges)
-      if(e.value && setting.ranges[e.value]) {
-        var rule = SpreadsheetApp.newDataValidation().requireValueInList(setting.ranges[e.value]).build()
-        targetCell.setDataValidation(rule)
-      } else {
-        targetCell.setDataValidation(null)
+  var values = range.getValues();
+  Logger.log(values)
+  values.forEach(function (row, rowId) {
+    row.forEach(function (col, colId) {
+      var value = values[rowId][colId]
+      Logger.log(colId + ',' + rowId + ','+value)
+      
+      for(var key in settings) {
+        var setting = settings[key]
+        if(setting.target == sheetName && startColId + colId == setting.column && startRowId + rowId >= setting.row) {
+          var targetCell = e.source.getActiveSheet().getRange(startRowId + rowId, startColId + colId + 1)
+          if(value && setting.ranges[value]) {
+            var rule = SpreadsheetApp.newDataValidation().requireValueInList(setting.ranges[value]).build()
+            targetCell.setDataValidation(rule)
+          } else {
+            targetCell.setDataValidation(null)
+          }
+          Logger.log('FIN')
+          break;
+        }
       }
-      Logger.log('FIN')
-      break;
-    }
-  }
+    });
+  });
+  
+  
 }
 
 

@@ -56,7 +56,6 @@ function getJsonProperty(key) {
   for (var i = 0; i < numParts; i++) {
       property += userProperties.getProperty(KEY+key + i);  
   }
-  Logger.log(property)
   try {
     return JSON.parse(property);
   } catch (err) {
