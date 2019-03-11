@@ -72,21 +72,22 @@ function init () {
   ScriptApp.newTrigger('edit')
     .forSpreadsheet(SpreadsheetApp.getActive())
     .onEdit()
-    .create()
-  Logger.log(settings)
+    .create()  
 }
 
 
 function edit(e) {
   Logger.log('Edit on')
-  var range = e.range
-  var startColId = range.getColumn()
-  var startRowId = range.getRow()
-  var sheetName = e.source.getActiveSheet().getName()
-  var settings = getJsonProperty('settings') || []
+  if(!e || !e.range) return;
+  
+  var range = e.range;  
+  var startColId = range.getColumn();
+  var startRowId = range.getRow();
+  var sheetName = e.source.getActiveSheet().getName();
+  var settings = getJsonProperty('settings') || [];
   
   var values = range.getValues();
-  Logger.log(values)
+  Logger.log(values);
   values.forEach(function (row, rowId) {
     row.forEach(function (col, colId) {
       var value = values[rowId][colId]

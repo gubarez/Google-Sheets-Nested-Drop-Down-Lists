@@ -21,7 +21,7 @@ function chunkStringParts(str, parts) {
 }
 
 function setJsonProperty(key, data) {
-  var userProperties = PropertiesService.getUserProperties();  
+  var docProperties = PropertiesService.getDocumentProperties();  
  
   var value = JSON.stringify(data);
   var numBites = value.length;
@@ -35,26 +35,26 @@ function setJsonProperty(key, data) {
   var numParts = Math.ceil(numBites / NUM_MAX_BITE_SIZEOFPROPERTY);
   var values = chunkStringParts(value, numParts);
   
-  userProperties.setProperty(KEY+key + STR_PREFIX_NUMOFPARTS, numParts);
+  docProperties.setProperty(KEY+key + STR_PREFIX_NUMOFPARTS, numParts);
   
   // set data 
   for (var i = 0; i < numParts; i++) {
     value = values[i];
-    userProperties.setProperty(KEY+key + i, value);  
+    docProperties.setProperty(KEY+key + i, value);  
   }
 
   return 'Set Properties -- ok!'
 }
 
 function getJsonProperty(key) {
-  var userProperties = PropertiesService.getUserProperties();
+  var docProperties = PropertiesService.getDocumentProperties();
   var property = ''
-  userProperties.getProperty(KEY+key);
+  docProperties.getProperty(KEY+key);
   
-  var numParts = userProperties.getProperty(KEY+key + STR_PREFIX_NUMOFPARTS);
+  var numParts = docProperties.getProperty(KEY+key + STR_PREFIX_NUMOFPARTS);
   
   for (var i = 0; i < numParts; i++) {
-      property += userProperties.getProperty(KEY+key + i);  
+      property += docProperties.getProperty(KEY+key + i);  
   }
   try {
     return JSON.parse(property);
